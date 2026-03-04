@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html>
+<body>
+
+<h2>Test Bridge</h2>
+
+<button onclick="test()">Test Python</button>
+
+<script>
+    function test() {
+        alert("JS called");
+        AndroidBridge.processText("Halo bro");
+    }
+
+    function showResult(result){
+        alert("From Python: " + result);
+    }
+</script>
+
+</body>
+</html>
