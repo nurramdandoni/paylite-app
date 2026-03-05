@@ -30,10 +30,10 @@
                 <action android:name="android.intent.action.VIEW" />
                 <category android:name="android.intent.category.DEFAULT" />
                 <category android:name="android.intent.category.BROWSABLE" />
-<!--                <data-->
-<!--                    android:scheme="paylite"-->
-<!--                    android:host="callback" />-->
-                <data android:scheme="paylite"/>
+                <data
+                    android:scheme="paylite"
+                    android:host="callback" />
+<!--                <data android:scheme="paylite"/>-->
             </intent-filter>
 
         </activity>

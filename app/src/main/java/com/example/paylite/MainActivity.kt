@@ -22,6 +22,7 @@ import android.webkit.JavascriptInterface
 import com.chaquo.python.Python
 import android.util.Base64
 import android.util.Log
+import android.widget.Toast
 
 //chaquopy
 import com.chaquo.python.android.AndroidPlatform
@@ -44,9 +45,8 @@ class MainActivity : AppCompatActivity() {
             Python.start(AndroidPlatform(this))
         }
         setContentView(R.layout.activity_main)
-        handleDeepLink(intent)
-
         webView = findViewById(R.id.webView)
+        handleDeepLink(intent)
 
 //        webView.webViewClient = WebViewClient()
         webView.webViewClient = object : WebViewClient() {
@@ -140,13 +140,22 @@ class MainActivity : AppCompatActivity() {
             if (!tokenApps.isNullOrEmpty()) {
 
                 Log.d("DEEP_LINK_TOKEN", tokenApps)
+                Toast.makeText(this, "DeepLink triggered with token : ${tokenApps}", Toast.LENGTH_SHORT).show()
 
                 webView.post {
-                    webView.evaluateJavascript(
-                        "window.onTokenReceived('$tokenApps');",
-                        null
+
+                    webView.loadUrl(
+                        "https://account.paylite.co.id/api/mobile-login?tokenApps=$tokenApps"
                     )
+
                 }
+
+//                webView.post {
+//                    webView.evaluateJavascript(
+//                        "window.onTokenReceived('$tokenApps');",
+//                        null
+//                    )
+//                }
             }
         }
     }
