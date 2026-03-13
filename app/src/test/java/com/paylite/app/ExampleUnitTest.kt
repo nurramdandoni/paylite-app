@@ -1,4 +1,4 @@
-package com.example.paylite
+package com.paylite.app
 
 import org.junit.Test
 

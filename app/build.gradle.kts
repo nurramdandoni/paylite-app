@@ -5,7 +5,7 @@ plugins {
 }
 
 android {
-    namespace = "com.example.paylite"
+    namespace = "com.paylite.app"
     compileSdk = 35
 
     compileOptions {
@@ -18,7 +18,7 @@ android {
     }
 
     defaultConfig {
-        applicationId = "com.example.paylite"
+        applicationId = "com.paylite.app"
         minSdk = 24
         targetSdk = 35
         versionCode = 1
@@ -40,12 +40,12 @@ kotlin {
 }
 
 chaquopy {
-    version = "3.10"
-
     defaultConfig {
+        version = "3.10"
+
         pip {
             install("numpy")
-            install("opencv-contrib-python-headless")
+            install("opencv-contrib-python")
         }
     }
 }
