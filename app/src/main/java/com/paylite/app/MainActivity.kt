@@ -75,7 +75,7 @@ class MainActivity : AppCompatActivity() {
         android.webkit.CookieManager.getInstance().setAcceptCookie(true)
         android.webkit.CookieManager.getInstance().setAcceptThirdPartyCookies(webView, true)
 
-        webView.addJavascriptInterface(WebAppBridge(webView), "AndroidBridge")
+        webView.addJavascriptInterface(WebAppBridge(this, webView), "AndroidBridge")
         val cookieManager = android.webkit.CookieManager.getInstance()
         val cookies = cookieManager.getCookie("https://account.paylite.co.id")
 
@@ -250,50 +250,6 @@ class MainActivity : AppCompatActivity() {
     override fun onDestroy() {
         super.onDestroy()
         unregisterReceiver(onComplete)
-    }
-}
-
-
-class WebAppBridge(private val webView: WebView) {
-    @JavascriptInterface
-    fun isApp(): Boolean {
-        return true
-    }
-
-    @JavascriptInterface
-    fun getVersion(): String {
-        return "1.0.0"
-    }
-    @JavascriptInterface
-    fun processImage(key_answer: String, imageBase64: String) {
-        try {
-
-            Log.d("C_BRIDGE_TEST", "Called with Key Answer : $key_answer and ImageBase64 : $imageBase64")
-
-            val py = Python.getInstance()
-            val module = py.getModule("processor")
-
-            val result = module.callAttr("process_data_ljk", key_answer, imageBase64).toString()
-
-            Log.d("C_BRIDGE_RESULT", result)
-
-            webView.post {
-                webView.evaluateJavascript(
-                    "showResult('$result')",
-                    null
-                )
-            }
-
-        } catch (e: Exception) {
-            Log.e("C_PYTHON_ERROR", Log.getStackTraceString(e))
-
-            webView.post {
-                webView.evaluateJavascript(
-                    "alert('ERROR: ${e.message}')",
-                    null
-                )
-            }
-        }
     }
 }
 
