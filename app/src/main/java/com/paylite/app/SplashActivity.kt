@@ -3,6 +3,8 @@ package com.paylite.app
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
+import android.view.Gravity
+import android.widget.FrameLayout
 import android.widget.VideoView
 import androidx.appcompat.app.AppCompatActivity
 
@@ -11,8 +13,22 @@ class SplashActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
+        val layout = FrameLayout(this)
+
         val videoView = VideoView(this)
-        setContentView(videoView)
+
+        val params = FrameLayout.LayoutParams(
+            FrameLayout.LayoutParams.WRAP_CONTENT,
+            FrameLayout.LayoutParams.WRAP_CONTENT
+        )
+
+        params.gravity = Gravity.CENTER
+
+        videoView.layoutParams = params
+
+        layout.addView(videoView)
+
+        setContentView(layout)
 
         val uri = Uri.parse("android.resource://$packageName/${R.raw.splash}")
         videoView.setVideoURI(uri)
