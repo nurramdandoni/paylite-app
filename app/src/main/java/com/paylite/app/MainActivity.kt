@@ -76,7 +76,22 @@ class MainActivity : AppCompatActivity() {
         android.webkit.CookieManager.getInstance().setAcceptThirdPartyCookies(webView, true)
 
         webView.addJavascriptInterface(WebAppBridge(webView), "AndroidBridge")
-        webView.loadUrl("https://account.paylite.co.id")
+        val cookieManager = android.webkit.CookieManager.getInstance()
+        val cookies = cookieManager.getCookie("https://account.paylite.co.id")
+
+        if (cookies != null && cookies.contains("user_id=")) {
+
+            Log.d("COOKIE_CHECK", "User sudah login")
+
+            webView.loadUrl("https://account.paylite.co.id/loginC")
+
+        } else {
+
+            Log.d("COOKIE_CHECK", "User belum login")
+
+            webView.loadUrl("https://account.paylite.co.id")
+
+        }
         webView.post {
             handleDeepLink(intent)
         }
